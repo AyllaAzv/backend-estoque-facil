@@ -21,7 +21,7 @@ module.exports = {
         const { nome, codigo, validade, dataCadastro, quantidade, quantidadeMinima, quantidadeMaxima, valor } = req.body;
         const usuario_id = req.headers.authorization;
 
-        const [id] = await connection('incidents').insert({
+        const [id] = await connection('produtos').insert({
             nome, 
             codigo,
             validade,
