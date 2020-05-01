@@ -9,6 +9,7 @@ exports.up = function(knex) {
         table.integer('quantidadeMinima').notNullable();
         table.integer('quantidadeMaxima').notNullable();
         table.decimal('valor').notNullable();
+        table.string('imagem');
 
         table.string('usuario_id').notNullable();
 

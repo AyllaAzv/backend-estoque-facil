@@ -18,7 +18,7 @@ module.exports = {
     },
 
     async create(req, res) {
-        const { nome, codigo, validade, dataCadastro, quantidade, quantidadeMinima, quantidadeMaxima, valor } = req.body;
+        const { nome, codigo, validade, dataCadastro, quantidade, quantidadeMinima, quantidadeMaxima, valor, imagem } = req.body;
         const usuario_id = req.headers.authorization;
 
         const [id] = await connection('produtos').insert({
@@ -30,10 +30,39 @@ module.exports = {
             quantidadeMinima,
             quantidadeMaxima,
             valor,
+            imagem,
             usuario_id,
         });
 
         return res.json({ id });
+    },
+
+    async update(req, res) {
+        const { id } = req.params;
+        const usuario_id = req.headers.authorization;
+        const { nome, codigo, validade, dataCadastro, quantidade, quantidadeMinima, quantidadeMaxima, valor, imagem } = req.body;
+
+        const produto = await connection('produtos').where('id', id).select('usuario_id').first();
+
+        if (produto.usuario_id != usuario_id) {
+            return res.status(401).json({
+                error: 'Operation not permitted.'
+            });
+        }
+
+        await connection('produtos').where('id', id).update({
+            nome, 
+            codigo,
+            validade,
+            dataCadastro,
+            quantidade,
+            quantidadeMinima,
+            quantidadeMaxima,
+            valor,
+            imagem,
+        });
+
+        return res.status(204).send();
     },
 
     async delete(req, res) {

@@ -10,12 +10,14 @@ const routes = express.Router();
 
 //USUARIO
 routes.get('/usuarios', UsuarioController.index);
+
 routes.post('/usuario', celebrate({
     [Segments.BODY]: Joi.object().keys({
         usuario: Joi.string().required().min(3),
         senha: Joi.string().required().min(3),
     }),
 }), UsuarioController.create);
+
 routes.delete('/usuario/:id', celebrate({
     [Segments.PARAMS]: Joi.object().keys({
         id: Joi.number().required(),
@@ -28,6 +30,7 @@ routes.get('/produtos', celebrate({
         page: Joi.number(),
     }),
 }), ProdutoController.index);
+
 routes.post('/produto', celebrate({
     [Segments.BODY]: Joi.object().keys({
         nome: Joi.string().required().min(3),
@@ -39,11 +42,19 @@ routes.post('/produto', celebrate({
         quantidadeMaxima: Joi.number().required(),
         valor: Joi.number().required(),
         quantidadeMinima: Joi.number().required(),
+        imagem: Joi.string()
     }),
     [Segments.HEADERS]: Joi.object({
-        authorization: Joi.number().required()
+        authorization: Joi.number().required(),
     }).unknown(),
 }), ProdutoController.create);
+
+routes.put('/produto/:id', celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+        id: Joi.number().required(),
+    }),
+}), ProdutoController.update);
+
 routes.delete('/produto/:id', celebrate({
     [Segments.PARAMS]: Joi.object().keys({
         id: Joi.number().required(),
