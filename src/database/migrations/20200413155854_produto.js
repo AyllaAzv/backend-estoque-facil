@@ -11,7 +11,7 @@ exports.up = function(knex) {
         table.decimal('valor').notNullable();
         table.string('imagem');
 
-        table.string('usuario_id').notNullable();
+        table.int('usuario_id').notNullable();
 
         table.foreign('usuario_id').references('id').inTable('usuarios');
     });
