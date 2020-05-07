@@ -33,6 +33,7 @@ routes.get('/produtos', celebrate({
 
 routes.post('/produto', celebrate({
     [Segments.BODY]: Joi.object().keys({
+        id: Joi.required(),
         nome: Joi.string().required().min(3),
         codigo: Joi.string().required(),
         validade: Joi.string().required(),
@@ -42,7 +43,8 @@ routes.post('/produto', celebrate({
         quantidadeMaxima: Joi.number().required(),
         valor: Joi.number().required(),
         quantidadeMinima: Joi.number().required(),
-        imagem: Joi.string()
+        imagem: Joi.string(),
+        usuario_id: Joi.required(),
     }),
     [Segments.HEADERS]: Joi.object({
         authorization: Joi.number().required(),

@@ -21,7 +21,7 @@ module.exports = {
         const { nome, codigo, validade, dataCadastro, quantidade, quantidadeMinima, quantidadeMaxima, valor, imagem } = req.body;
         const usuario_id = req.headers.authorization;
 
-        const [id] = await connection('produtos').insert({
+        const produto = await connection('produtos').insert({
             nome, 
             codigo,
             validade,
@@ -34,7 +34,7 @@ module.exports = {
             usuario_id,
         });
 
-        return res.json({ id });
+        return res.json(produto);
     },
 
     async update(req, res) {
@@ -54,7 +54,6 @@ module.exports = {
             nome, 
             codigo,
             validade,
-            dataCadastro,
             quantidade,
             quantidadeMinima,
             quantidadeMaxima,
