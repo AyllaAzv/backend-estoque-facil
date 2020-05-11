@@ -17,6 +17,19 @@ module.exports = {
         return res.json(produtos);
     },
 
+    async getByCodigo(req, res) {
+        const usuario_id = req.headers.authorization;
+        const { codigo } = req.params;
+
+        const produto = await connection('produtos').where('codigo', codigo).where('usuario_id', usuario_id).select('*').first();
+      
+        if (!produto) {
+            return res.status(400).json({ error: 'Nenhum produto encontrado com este código.' });
+        }
+
+        return res.json(produto);
+    },
+
     async create(req, res) {
         const { nome, codigo, validade, dataCadastro, quantidade, quantidadeMinima, quantidadeMaxima, valor, imagem } = req.body;
         const usuario_id = req.headers.authorization;

@@ -31,6 +31,15 @@ routes.get('/produtos', celebrate({
     }),
 }), ProdutoController.index);
 
+routes.get('/produto/:codigo', celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+        codigo: Joi.string().required(),
+    }),
+    [Segments.HEADERS]: Joi.object({
+        authorization: Joi.number().required()
+    }).unknown(),
+}), ProdutoController.getByCodigo);
+
 routes.post('/produto', celebrate({
     [Segments.BODY]: Joi.object().keys({
         id: Joi.required(),
