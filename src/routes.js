@@ -79,6 +79,18 @@ routes.get('/profile', celebrate({
     }).unknown(),
 }), ProfileController.index);
 
+routes.get('/produtosDisponivel', celebrate({
+    [Segments.HEADERS]: Joi.object({
+        authorization: Joi.number().required()
+    }).unknown(),
+}), ProfileController.getProdutosDisponivel);
+
+routes.get('/produtosSemEstoque', celebrate({
+    [Segments.HEADERS]: Joi.object({
+        authorization: Joi.number().required()
+    }).unknown(),
+}), ProfileController.getProdutosSemEstoque);
+
 //SESSION
 routes.post('/sessions', celebrate({
     [Segments.BODY]: Joi.object().keys({
